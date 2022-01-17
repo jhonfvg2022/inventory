@@ -1,0 +1,28 @@
+<nz-table #basicTable [nzData]="listOfData">
+    <thead>
+      <tr>        
+        <th>email</th>
+        <th>group</th>
+        <th>id</th>
+        <th>lastname</th>
+        <th>name</th>
+        <th>password</th>
+        <th>phone</th>
+        <th>photo</th>
+        <th>rol</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of items">
+        <td>{{ item.email }}</td>
+        <td>{{ item.group }}</td>
+        <td>{{ item.id }}</td>
+        <td>{{ item.lastname }}</td>
+        <td>{{ item.name }}</td>
+        <td>{{ item.password }}</td>
+        <td>{{ item.phone }}</td>
+        <td>{{ item.photo }}</td>
+        <td>{{ item.rol }}</td>            
+      </tr>
+    </tbody>
+  </nz-table>
