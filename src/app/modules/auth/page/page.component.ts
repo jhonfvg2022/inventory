@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { LoginService } from 'src/app/services/login.service';
 
 @Component({
   selector: 'app-page',
@@ -11,7 +12,7 @@ export class PageComponent implements OnInit {
 
   validateForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, private loginService: LoginService) { }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
@@ -23,11 +24,13 @@ export class PageComponent implements OnInit {
 
   submitForm(): void {
     if (this.validateForm.valid) {
-      const url = 'http://localhost:3000/api/login';     
+      this.loginService.login(this.validateForm.value.email, this.validateForm.value.password);
+      console.log('submit', this.validateForm.value);
+      // const url = 'http://localhost:3000/api/login';     
 
-      this.http.post(url, { email: this.validateForm.value.email, password: this.validateForm.value.password }).subscribe(data => {
-        console.log(data);
-      })
+      // this.http.post(url, { email: this.validateForm.value.email, password: this.validateForm.value.password }).subscribe(data => {
+      //   console.log(data);
+      // })
 
       // const url = 'http://localhost:3000/api/users';
       // var token = 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGFkbWluLmNvbSIsImlkIjoiMCIsImlhdCI6MTY0MjM5MTQ0NiwiZXhwIjoxNjQyNDc3ODQ2fQ.wJ258FGwXxRi0fWfK2y3_vZsauaB6OS7cwZ6xeIMtsk'
@@ -44,8 +47,8 @@ export class PageComponent implements OnInit {
       //   .then(data => {
       //     console.log('submit', data);
       //   });
-      console.log('submit', this.validateForm.value);
-      
+      //console.log('submit', this.validateForm.value);
+
     } else {
       Object.values(this.validateForm.controls).forEach(control => {
         if (control.invalid) {
