@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthService } from './services/auth.service';
 import { SharedService } from './services/shared.service';
 
 @Component({
@@ -7,15 +8,20 @@ import { SharedService } from './services/shared.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'inventory';
+  isCollapsed = false;
 
+  loginState: boolean = false;
+  emailLogin: string = '';
+  stateLogin: any = { token: '', email: '' };
 
-  message: string = "Iniciar Sesión"
-  constructor(private sharedService: SharedService) {
-    this.sharedService.countdown.subscribe(x=>{
-      this.message=x;
+  constructor(private sharedService: SharedService, private authService:AuthService) {
+    this.sharedService.sharedInfoLogin.subscribe(infoLogin => {
+      this.stateLogin = infoLogin;
+      console.log(infoLogin);
     })
-   }
+  }
 
-  
+  logout():void{
+    this.authService.logout();
+  }
 }

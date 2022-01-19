@@ -3,24 +3,14 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 
 
-interface IShared {
-  data: string;
-}
-
 @Injectable({
   providedIn: 'root'
 })
 export class SharedService {
 
 
-  datos: IShared = { data: "test" };
-  datos2: IShared = { data: "test" };
-  msj!: Observable<any>;
-  count: number = 0;
-
-
-  private countdownSource = new BehaviorSubject<string>("hola");
-  public countdown = this.countdownSource.asObservable();
+  private sharedInfoLoginSource = new BehaviorSubject<any>({ token: '', email: '' });
+  public sharedInfoLogin = this.sharedInfoLoginSource.asObservable();
 
   constructor() {
     // this.msj = new Observable(subscriber => {
@@ -34,10 +24,10 @@ export class SharedService {
     // this.countdown.subscribe(x => {
     //   console.log(x);
     // });
-    
+
   }
 
-  setData(): void {
-    this.countdownSource.next("jhon")    
+  updateSharedInfoLogin(info: any): void {
+    this.sharedInfoLoginSource.next(info)
   }
 }

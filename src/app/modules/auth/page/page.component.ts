@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { LoginService } from 'src/app/services/login.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { NzMessageService } from 'ng-zorro-antd/message'
 
 @Component({
   selector: 'app-page',
@@ -12,7 +13,7 @@ export class PageComponent implements OnInit {
 
   validateForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private http: HttpClient, private loginService: LoginService) { }
+  constructor(private fb: FormBuilder, private http: HttpClient, private authService: AuthService, private message: NzMessageService) { }
 
   ngOnInit() {
     this.validateForm = this.fb.group({
@@ -24,8 +25,16 @@ export class PageComponent implements OnInit {
 
   submitForm(): void {
     if (this.validateForm.valid) {
-      this.loginService.login(this.validateForm.value.email, this.validateForm.value.password);
-      console.log('submit', this.validateForm.value);
+      this.authService.login(this.validateForm.value.email, this.validateForm.value.password).then(res => {
+        if (res) {
+          this.message.create('success', 'Inicio de sesión exitoso');
+          console.log('submit', this.validateForm.value);          
+        }
+        else {
+          this.message.create('error', 'Credenciales incorrectas');
+        }
+      });
+
       // const url = 'http://localhost:3000/api/login';     
 
       // this.http.post(url, { email: this.validateForm.value.email, password: this.validateForm.value.password }).subscribe(data => {

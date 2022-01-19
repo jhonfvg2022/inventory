@@ -13,8 +13,9 @@ import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
-
+import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { NzMessageModule } from 'ng-zorro-antd/message';
 
 @NgModule({
   declarations: [
@@ -32,8 +33,10 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     NzMenuModule,
     NzButtonModule,
     NzInputModule,
-    NzCheckboxModule,    
-    NzSpaceModule
+    NzCheckboxModule,  
+    NzAvatarModule,  
+    NzSpaceModule,
+    NzMessageModule
   ]
 })
 export class AuthModule { }

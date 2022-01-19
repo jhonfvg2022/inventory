@@ -1,51 +1,61 @@
-<nz-layout>
+<nz-layout class="app-layout">
   <nz-sider nzCollapsible nzWidth="200px">
-    <div class="logo"></div>
-    <ul nz-menu nzTheme="dark" nzMode="inline">
-      <li nz-menu-item>
-        <i nz-icon nzType="pie-chart"></i>
-        <span>Option 1</span>
-      </li>
-      <li nz-menu-item>
-        <i nz-icon nzType="desktop"></i>
-        <span>Option 2</span>
-      </li>
-      <li nz-submenu nzTitle="User" nzIcon="user">
+    <div class="sidebar-logo">
+      <a href="https://ng.ant.design/" target="_blank">
+        <img src="https://ng.ant.design/assets/img/logo.svg" alt="logo">
+        <h1>Inventary</h1>
+      </a>
+    </div>
+    <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
         <ul>
-          <li nz-menu-item>Tom</li>
-          <li nz-menu-item>Bill</li>
-          <li nz-menu-item>Alex</li>
+          <li nz-menu-item nzMatchRouter>
+            <a routerLink="/home">Welcome</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a  routerLink="/users">Monitor</a>
+          </li>
+          <li nz-menu-item nzMatchRouter>
+            <a>Workplace</a>
+          </li>
         </ul>
       </li>
-      <li nz-submenu nzTitle="Team" nzIcon="team">
+      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
         <ul>
-          <li nz-menu-item>Team 1</li>
-          <li nz-menu-item>Team 2</li>
+          <li nz-menu-item nzMatchRouter>
+            <a>Basic Form</a>
+          </li>
         </ul>
-      </li>
-      <li nz-menu-item>
-        <i nz-icon nzType="file"></i>
-        <span>File</span>
       </li>
     </ul>
   </nz-sider>
   <nz-layout>
     <nz-header>
-      <div class="space-align-container">
-        <div nz-space nzAlign="end" class="space-align-block">
-          <span nz-typography nzType="warning">jhonfredy@outlook.com</span>       
-        </div>
-        <div nz-space nzAlign="end" class="space-align-block">
-          <nz-avatar nzIcon="user" style="background-color:#87d068;"></nz-avatar>          
-        </div>
-        <div nz-space nzAlign="end" class="space-align-block">          
-          <button nz-button nzType="primary" routerLink="/auth">{{message}}</button>
+      <div class="app-header">
+        <div class="site-page-header-ghost-wrapper">
+          <nz-page-header [nzGhost]="false">
+            <button nz-button>Operation</button>
+            <nz-page-header-title>Inventary</nz-page-header-title>
+            <nz-page-header-subtitle>Version 1.0.0</nz-page-header-subtitle>
+            <nz-page-header-extra>
+              <span nz-typography nzType="secondary">{{stateLogin.email}}</span>
+              <nz-avatar nzIcon="user" style="background-color:#87d068;"></nz-avatar>
+              <div *ngIf="stateLogin.token; then thenBlock else elseBlock"></div>
+              <ng-template #thenBlock>
+                <button nz-button nzType="primary" (click)="logout()">Cerrar Sesión</button>
+              </ng-template>
+              <ng-template #elseBlock>
+                <button nz-button nzType="primary" routerLink="/auth">Iniciar Sesión</button>
+              </ng-template>
+            </nz-page-header-extra>
+          </nz-page-header>
         </div>
       </div>
-      
     </nz-header>
     <nz-content>
-      <router-outlet></router-outlet>     
+      <div class="inner-content">
+        <router-outlet></router-outlet>
+      </div>
     </nz-content>
     <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
   </nz-layout>
