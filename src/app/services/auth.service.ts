@@ -1,29 +1,37 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { SharedService } from './shared.service';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 
+interface IToken {
+  token: string
+}
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private http: HttpClient, private sharedService: SharedService, private route: Router) { }
+
+  public token: string = '';
+  private infoLoginSource = new BehaviorSubject<any>({ token: '', email: '' });
+  public infoLogin = this.infoLoginSource.asObservable();
+
+  constructor(private http: HttpClient, private route: Router) { }
+
   async login(email: string, password: string): Promise<boolean> {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
       const url = 'http://localhost:3000/api/login';
-      this.http.post(url, { email: email, password: password }).subscribe(data => {
+      this.http.post<IToken>(url, { email: email, password: password }).subscribe(data => {
         if (data.hasOwnProperty('token')) {
           console.log(data);
-          var json= JSON.stringify(data);
-          var temp =JSON.parse(json)
-          this.sharedService.updateSharedInfoLogin({ token: temp.token, email: email });          
-          //localStorage.setItem('token', JSON.stringify(data));
+          this.token = data.token;
+          this.infoLoginSource.next({ token: data.token, email: email });
           this.route.navigate(['/home']);
           resolve(true);
         }
         else {
-          //localStorage.removeItem('token');
+          this.token = '';
+          this.infoLoginSource.next({ token: '', email: '' });
           resolve(false);
         }
       })
@@ -31,8 +39,15 @@ export class AuthService {
   }
 
   logout(): void {
-    //localStorage.setItem('token', '');
-    this.sharedService.updateSharedInfoLogin({ token: '', email: '' });
+    this.token = '';
+    this.infoLoginSource.next({ token: '', email: '' });
     this.route.navigate(['/auth']);
   }
+
+  protectedRoute(): void {
+    if (!this.token) {
+      this.route.navigate(['/home']);
+    }
+  }
+
 }

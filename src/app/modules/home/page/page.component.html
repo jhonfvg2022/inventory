@@ -1,23 +1,17 @@
 <div class="space-align-container">
-
-
     <div class="space-items">
         <h3 nz-typography>Inventary 1.0</h3>
     </div>
-
-
-<div class="space-items">
-    <nz-image-group>
-        <img nzDisablePreview="False" nz-image width="200px"
-            nzSrc="https://img.alicdn.com/tfs/TB1Z0PywTtYBeNjy1XdXXXXyVXa-186-200.svg" alt="" />
-    </nz-image-group>
-</div>
-   
-<div class="space-items">
-    <button nz-button nzType="primary" [nzSize]="size">
-        <i nz-icon nzType="user" nzTheme="outline"></i>
-        Iniciar Sesión
-    </button>
-</div>
-   
+    <div class="space-items">
+        <nz-image-group>
+            <img nzDisablePreview="False" nz-image width="200px"
+                nzSrc="https://img.alicdn.com/tfs/TB1Z0PywTtYBeNjy1XdXXXXyVXa-186-200.svg" alt="" />
+        </nz-image-group>
+    </div>
+    <div class="space-items">
+        <button nz-button nzType="primary" [nzSize]="size" routerLink="/auth">
+            <i nz-icon nzType="user" nzTheme="outline"></i>
+            Iniciar Sesión
+        </button>
+    </div>
 </div>

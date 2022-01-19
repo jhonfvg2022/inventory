@@ -21,7 +21,6 @@ import { NzTypographyModule } from 'ng-zorro-antd/typography';
 registerLocaleData(es);
 
 
-
 @NgModule({
   declarations: [
     AppComponent    
