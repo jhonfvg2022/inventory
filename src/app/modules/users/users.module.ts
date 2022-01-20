@@ -5,6 +5,7 @@ import { UsersRoutingModule } from './users-routing.module';
 import { PageComponent } from './page/page.component';
 
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -88,6 +89,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     UsersRoutingModule,
     HttpClientJsonpModule, 
     HttpClientModule,
+    FormsModule,
 
     NzAffixModule,
     NzAlertModule,

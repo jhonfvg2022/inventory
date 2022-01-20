@@ -1,28 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+
 import { IUser } from '../models/iuser';
 import { AuthService } from './auth.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsersService {
 
-  url: string = "http://localhost:3000/api/users";
+  urlBase: string = "http://localhost:3000/api/";
 
   constructor(private http: HttpClient, private authService: AuthService) { }
 
-  getUser(): Observable<IUser[]> {
-    const headerDict = {
-      'Content-Type': 'text/html; charset=utf-8',
-      'Accept': 'application/json',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'authorization': 'Bearer ' + this.authService.token
-    }
-    const requestOptions = {
-      headers: new HttpHeaders(headerDict),
-    };
-    return this.http.get<IUser[]>(this.url, requestOptions);
+  getUser(): Observable<IUser[]> {    
+    const headers = { 'content-type': 'application/json', 'authorization': 'Bearer ' + this.authService.token, 'filters':'{}' }    
+    return this.http.get<IUser[]>(this.urlBase + 'users', { 'headers': headers });
   }
+
+
+  addUser(userInfo: IUser): Observable<IUser> {   
+    const headers = { 'content-type': 'application/json', 'authorization': 'Bearer ' + this.authService.token }
+    const body = JSON.stringify(userInfo);
+    console.log(body);
+    return this.http.post<IUser>(this.urlBase + 'addUser', body, { 'headers': headers });
+  };
+
 }

@@ -1,7 +1,17 @@
+<div class="site-page-header-ghost-wrapper">
+  <nz-page-header [nzGhost]="false">
+    <nz-page-header-title>Usuarios</nz-page-header-title>
+    <nz-page-header-extra>
+      <button nz-button nzType="primary">Agregar</button>
+    </nz-page-header-extra>
+  </nz-page-header>
+</div>
+
 <nz-table #basicTable [nzData]="users">
   <thead>
     <tr>
-      <th>email</th>
+      <th [nzSortOrder]="emailCol.sortOrder" [nzSortFn]="emailCol.sortFn" [nzSortDirections]="emailCol.sortDirections"
+        [nzFilterMultiple]="emailCol.filterMultiple" >email</th>
       <th>group</th>
       <th>id</th>
       <th>lastname</th>
@@ -13,16 +23,46 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let user of users ">
-      <td>{{ user.email }}</td>
-      <td>{{ user.group }}</td>
-      <td>{{ user.id }}</td>
-      <td>{{ user.lastname }}</td>
-      <td>{{ user.name }}</td>
-      <td>{{ user.password }}</td>
-      <td>{{ user.phone }}</td>
-      <td>{{ user.photo }}</td>
-      <td>{{ user.rol }}</td>
+    <tr *ngFor="let user of basicTable.data">
+      <ng-container *ngIf="!editCache[user.id].edit; else editTemplate">
+        <td>{{ user.email }}</td>
+        <td>{{ user.group }}</td>
+        <td>{{ user.id }}</td>
+        <td>{{ user.lastname }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.password }}</td>
+        <td>{{ user.phone }}</td>
+        <td>{{ user.photo }}</td>
+        <td>{{ user.rol }}</td>
+        <nz-space nzSize="small">
+          <td><button nz-tooltip nzTooltipTitle="Editar" nzTooltipColor="blue" nz-button nzType="primary" nzSize="small"
+              nzShape="circle" (click)="startEdit(user.id)"><i nz-icon nzType="edit" nzTheme="outline"></i></button>
+          </td>
+          <td><button nz-tooltip nzTooltipTitle="Eliminar" nzTooltipColor="blue" nz-button nzDanger nzType="primary" nzSize="small"
+              nzShape="circle" nz-popconfirm nzPopconfirmTitle="Desea eliminar?" (nzOnConfirm)="deleteUser(user.id)"><i nz-icon nzType="delete" nzTheme="outline"></i></button>
+          </td>
+        </nz-space>
+      </ng-container>
+      <ng-template #editTemplate>
+        <td><input type="text" nz-input [(ngModel)]="editCache[user.id].user.email" /></td>
+        <td><input type="text" nz-input [(ngModel)]="editCache[user.id].user.group" /></td>
+        <td><input type="text" nz-input [(ngModel)]="editCache[user.id].user.id" /></td>
+        <td><input type="text" nz-input [(ngModel)]="editCache[user.id].user.lastname" /></td>
+        <td><input type="text" nz-input [(ngModel)]="editCache[user.id].user.name" /></td>
+        <td><input type="text" nz-input [(ngModel)]="editCache[user.id].user.password" /></td>
+        <td><input type="text" nz-input [(ngModel)]="editCache[user.id].user.phone" /></td>
+        <td><input type="text" nz-input [(ngModel)]="editCache[user.id].user.photo" /></td>
+        <td><input type="text" nz-input [(ngModel)]="editCache[user.id].user.rol" /></td>
+        <td>
+          <nz-space nzSize="small">
+            <button nz-popconfirm nzPopconfirmTitle="Desea guardar?" (nzOnConfirm)="saveEdit(user.id)"
+              *nzSpaceItem nz-button nzType="primary" nzSize="small" nzShape="circle"><i nz-icon nzType="save"
+                nzTheme="outline"></i></button>
+            <button (click)="cancelEdit(user.id)" *nzSpaceItem nz-button nzType="primary" nzSize="small"
+              nzShape="circle"><i nz-icon nzType="close" nzTheme="outline"></i></button>
+          </nz-space>
+        </td>
+      </ng-template>
     </tr>
   </tbody>
 </nz-table>
