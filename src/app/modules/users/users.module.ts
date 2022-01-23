@@ -5,7 +5,9 @@ import { UsersRoutingModule } from './users-routing.module';
 import { PageComponent } from './page/page.component';
 
 import { HttpClientJsonpModule, HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -79,10 +81,12 @@ import { NzResizableModule } from 'ng-zorro-antd/resizable';
 import { NzPipesModule } from 'ng-zorro-antd/pipes';
 
 import { NzSpaceModule } from 'ng-zorro-antd/space';
+import { AdduserComponent } from './adduser/adduser.component';
 
 @NgModule({
   declarations: [
-    PageComponent
+    PageComponent,
+    AdduserComponent
   ],
   imports: [
     CommonModule,
@@ -90,6 +94,7 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     HttpClientJsonpModule, 
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
 
     NzAffixModule,
     NzAlertModule,
@@ -160,6 +165,10 @@ import { NzSpaceModule } from 'ng-zorro-antd/space';
     NzResizableModule,
     NzPipesModule,
     NzSpaceModule
+  ],
+  exports:[
+    PageComponent,
+    AdduserComponent
   ]
 })
 export class UsersModule { }

@@ -70,12 +70,12 @@ nz-header {
 }
 
 nz-content {
-  margin: 24px;
+  margin: 10px;
 }
 
 .inner-content {
   padding: 24px;
-  background: #fff;
+  background: rgb(255, 255, 255);
   height: 100%;
 }
 
@@ -86,3 +86,4 @@ nz-footer {
 nz-sider {
  height: 100vh;
 }
+

@@ -20,7 +20,8 @@ interface ColumnItem {
   styleUrls: ['./page.component.css']
 })
 export class PageComponent implements OnInit {
-
+  visible = false;
+  visible2 = false;
 
   editCache: { [key: string]: { edit: boolean; user: IUser } } = {};
   users!: IUser[];
@@ -109,5 +110,24 @@ export class PageComponent implements OnInit {
       filterMultiple: true
     }
   ]
+
+
+ 
+
+  open(): void {
+    this.visible = true;
+  }
+
+  close(): void {
+    this.visible = false;
+  }
+
+  open2(): void {
+    this.visible2 = true;
+  }
+
+  close2(): void {
+    this.visible2 = false;
+  }
 
 }

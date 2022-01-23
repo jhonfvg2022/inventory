@@ -1,13 +1,15 @@
-<div class="site-page-header-ghost-wrapper">
+<div class="site-page-header-ghost-wrapper" style="margin-top: 10px;">
   <nz-page-header [nzGhost]="false">
     <nz-page-header-title>Usuarios</nz-page-header-title>
     <nz-page-header-extra>
-      <button nz-button nzType="primary">Agregar</button>
+      <button (click)="open()" nz-button nzType="primary">Agregar</button>
+      <button (click)="open2()" nz-button nzType="primary">Agregar</button>
     </nz-page-header-extra>
   </nz-page-header>
 </div>
 
-<nz-table #basicTable [nzData]="users">
+
+<nz-table #basicTable nzSize="small" nzTableLayout = "fixed" [nzData]="users">
   <thead>
     <tr>
       <th [nzSortOrder]="emailCol.sortOrder" [nzSortFn]="emailCol.sortFn" [nzSortDirections]="emailCol.sortDirections"
@@ -66,3 +68,46 @@
     </tr>
   </tbody>
 </nz-table>
+
+
+<nz-drawer
+  [nzBodyStyle]="{ overflow: 'auto' }"
+  [nzMaskClosable]="false"
+  [nzWidth]="600"
+  [nzVisible]="visible"
+  nzTitle="Agregar usuario"
+  [nzFooter]="footerTpl"
+  (nzOnClose)="close()"
+>
+<nz-content *nzDrawerContent>
+  <app-adduser></app-adduser>
+</nz-content>  
+
+  <ng-template #footerTpl>
+    <div style="float: right">
+      <button nz-button style="margin-right: 8px;" (click)="close()">Cancel</button>
+      <button nz-button nzType="primary" (click)="close()">Submit</button>
+    </div>
+  </ng-template>
+</nz-drawer>
+
+<nz-drawer
+  [nzBodyStyle]="{ overflow: 'auto' }"
+  [nzMaskClosable]="false"
+  [nzWidth]="600"
+  [nzVisible]="visible2"
+  nzTitle="Agregar usuario"
+  [nzFooter]="footerTpl"
+  (nzOnClose)="close2()"
+>
+<nz-content *nzDrawerContent>
+ <h1>tab2</h1>
+</nz-content>  
+
+  <ng-template #footerTpl>
+    <div style="float: right">
+      <button nz-button style="margin-right: 8px;" (click)="close2()">Cancel</button>
+      <button nz-button nzType="primary" (click)="close2()">Submit</button>
+    </div>
+  </ng-template>
+</nz-drawer>
